@@ -1,0 +1,4 @@
+User-agent: *
+Disallow: /
+Host: https://info.dealersair.com
+Sitemap: https://info.dealersair.com/sitemap.xml

@@ -1,0 +1,28 @@
+@import "sprite-extends";
+
+//gulp svg sprite bg size mixin
+$sprite-width: 2192;
+@mixin bgs($icon-svg-w: 1) {
+	background-size: ($sprite-width / $icon-svg-w) * 100% auto;
+}
+
+/*sprites*/
+.menu__arr{
+	@extend %svg-angle-down;
+	@include bgs(340);
+}
+
+.form__btn_search:before{
+	@extend %svg-search;
+	@include bgs(512);
+}
+
+.github-btn:after{
+	@extend %svg-github;
+	@include bgs(516);
+}
+
+.att-icon::before{
+	@extend %svg-exclamation-triangle;
+	@include bgs(596);
+}

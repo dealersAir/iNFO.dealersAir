@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu:400,500,700" rel="stylesheet">
+   <link href="https://fonts.googleapis.com/css?family=Roboto+Mono" rel="stylesheet">
+	<link rel="stylesheet" href="/templates/css/style.css">
+	<title>dealersAir</title>
+	<!--favicons/-->
+	<link rel="apple-touch-icon" sizes="57x57" href="/apple-icon-57x57.png">
+	<link rel="apple-touch-icon" sizes="60x60" href="/apple-icon-60x60.png">
+	<link rel="apple-touch-icon" sizes="72x72" href="/apple-icon-72x72.png">
+	<link rel="apple-touch-icon" sizes="76x76" href="/apple-icon-76x76.png">
+	<link rel="apple-touch-icon" sizes="114x114" href="/apple-icon-114x114.png">
+	<link rel="apple-touch-icon" sizes="120x120" href="/apple-icon-120x120.png">
+	<link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
+	<link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
+	<link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
+	<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+	<link rel="manifest" href="/manifest.json">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+	<meta name="theme-color" content="#ffffff">
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="/favicon.ico" type="image/x-icon">
+	<!--/favicons-->
+</head>
+<body>
+
+<!--HEADER/-->
+<header id="header" class="header">
+	<div class="row row_wrp row_col-middle header__row">
+		<div class="col p-y-0">
+			<a href="index.html" class="header__logo"><img src="/templates/images/coding.svg" alt="coding.dealersAir"></a>
+		</div>
+		<div class="col col_grow p-y-0">
+			<div class="row row_col-middle">
+				<nav class="col p-y-0">
+					<!--Menu/-->
+					<ul class="menu">
+	<li class="menu__item menu__item_has-children">
+		<span class="menu__a">Записки прогера</span>
+		<button class="menu__arr"></button>
+		<ul class="sub-menu menu__sub-menu">
+			<li class="sub-menu__item">
+				<a href="/css" class="sub-menu__a">CSS</a>
+			</li>
+			<li class="sub-menu__item">
+				<a href="/javascript" class="sub-menu__a">JavaScript</a>
+			</li>
+			<li class="sub-menu__item">
+				<a href="/html" class="sub-menu__a">HTML</a>
+			</li>
+		</ul>
+	</li>
+	<li class="menu__item menu__item_has-children">
+		<span class="menu__a">Практикум</span>
+		<button class="menu__arr"></button>
+		<ul class="sub-menu menu__sub-menu">
+			<li class="sub-menu__item">
+				<a href="/layout" class="sub-menu__a">HTML - верстка</a>
+			</li>
+		</ul>
+	</li>
+</ul>
+					<!--/Menu-->
+				</nav>
+				<div class="col col-right p-0">
+					
+				</div>
+			</div>
+		</div>
+		<button class="js-close-menu menu-close-btn"></button>
+	</div>
+	<button class="js-open-menu open-menu-btn"><span></span><span></span><span></span><span></span></button>
+</header>
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+   <article class="section">
+      <div class="row row_wrp">
+         <div class="col-12">
+            <h1 class="title">
+               RegExp
+            </h1>
+         </div>
+      </div>
+      <div class="article row row_wrp">
+         <div class="col-12">
+<h2>Специальные символы</h2>
+<p>
+Список cпециальных символов: <code>[ \ ^ $ . | ? * + ( )</code>
+</p>
+<p>
+Чтоб превратить спецсимвол в обычный, его необходимо экранировать, ставим перед ним обратный слеш <code>\</code>
+</p>
+<h2>Создание регулярного выражения</h2>
+<p>
+Регулярное выражение состоит из шаблона (pattern) и <b>необязательных</b> флагов (flags).
+</p>
+<pre><code>var reg = /pattern/;
+var reg = /pattern/flags;</code></pre>
+<p>
+или
+</p>
+<pre><code>var reg = new RegExp('pattern');
+var reg = new RegExp('pattern', 'flags');</code></pre>
+<blockquote>
+<span class="att-icon">При создании регулярки через <strong>new RegExp()</strong>, символьные классы (\w, \d, \s и
+т.д.), необходимо экранировать.</span>
+<pre><code>var reg = new RegExp('\\w*');</code></pre>
+</blockquote>
+<h2>Флаги</h2>
+<p>
+<code>i</code> - игнорирует регистр.
+</p>
+<p>
+<code>g</code> - ищет все совпадения.
+</p>
+<p>
+<code>m</code> - многострочный режим. Cимволы <code>^</code> и <code>$</code> обозначают начало и конец каждой
+строки.
+</p>
+<pre><code>var reg = /pattern/igm; <code class="code-comm">// порядок флагов не имеет значения</code>
+var reg = new RegExp('pattern', 'mig'); <code class="code-comm">// порядок флагов не имеет значения</code></code></pre>
+         </div>
+      </div>
+   </article>
+</main>
+<!--/MAIN-->
+
+<script src="/templates/js/script.js"></script>
+<script src="/templates/js/common.js"></script>
+
+</body>
+
+</html>

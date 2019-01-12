@@ -1,0 +1,121 @@
+@import "variables";
+@import "functions";
+@import "extends";
+@import "mixins";
+
+/*main*/
+.main{
+	padding-top: 60px;
+}
+
+/*full-page*/
+.full-page{
+	@extend %fwh;
+	padding-top: 100px;
+	overflow: hidden;
+	&_middle{
+		display: flex;
+		align-items: center;
+		&__inner{
+			width: 100%;
+		}
+	}
+}
+
+/*section*/
+.section{
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
+
+/*list*/
+.list{
+	list-style: none;
+	li{
+		padding-left: 30px;
+		margin-top: 30px;
+		@include fch(t);
+		position: relative;
+		&:before{
+			@extend %ab;
+			position: absolute;
+		}
+	}
+}
+ul.list{
+	li{
+		&:before{
+			width: 9px;
+			height: 9px;
+			left: 3px;
+			top: 5px;
+			border-radius: 50%;
+			background: $be;
+		}
+	}
+}
+ol.list{
+	counter-reset: listCounter;
+	li{
+		&:before{
+			counter-increment: listCounter;
+			content: counter(listCounter)".";
+			color: $be;
+			font-weight: 700;
+			top: 0;
+			left: 0;
+		}
+	}
+}
+
+/*image*/
+.fullwidth-img{
+	width: 100%;
+	height: auto;
+}
+
+/* title */
+.title{
+	font-size: 30px;
+	font-weight: 700;
+	line-height: 1.2;
+	margin-bottom: em(35,30);
+}
+
+/* article */
+.article{
+	h2{
+		font-size: 22px;
+		font-weight: 700;
+		margin: em(45,22) 0 em(30,22);
+		@include fch(t);
+	}
+	p{
+		line-height: 1.45;
+		margin-top: em(25);
+		@include fch(t);
+	}
+	pre{
+		line-height: 1.7;
+		padding: 10px 15px;
+		margin-top: em(25);
+		@include fch(t);
+		background: $oe2;
+		overflow: auto;
+	}
+	code{
+		padding: 3px 7px;
+		background: $oe2;
+		&.code-comm{
+			padding: 0;
+			color: $oe3;
+		}
+	}
+	blockquote{
+		line-height: (22/16);
+		margin-top: em(35);
+		@include fch(t);
+		padding: 15px 30px;
+		border: 2px solid $gy;
+	}
+}

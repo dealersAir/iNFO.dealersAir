@@ -1,0 +1,162 @@
+@import "../../../sass/variables";
+@import "../../../sass/functions";
+@import "../../../sass/extends";
+@import "../../../sass/mixins";
+
+/*menu*/
+.menu{
+	@include clr;
+	list-style: none;
+	margin-left: 50px;
+	&__item{
+		float: left;
+		margin-left: 45px;
+		@include fch(l);
+		&_has-children{
+			position: relative;
+			.menu__arr{
+				display: inline-block;
+			}
+			@media(min-width: 1001px){
+				&:hover{
+					.menu__sub-menu{
+						visibility: visible;
+						opacity: 1;
+					}
+				}
+			}
+		}
+		&_current{
+			.menu__a{
+				border-bottom-color: $bk;
+			}
+		}
+	}
+	&__a{
+		font-size: 18px;
+		font-weight: 700;
+		color: $be2;
+		line-height: normal;
+		text-decoration: none;
+		position: relative;
+		z-index: 2;
+		transition: .3s;
+		cursor: pointer;
+	}
+	
+	&__arr{
+		display: none;
+		width: 12px;
+		height: 17px;
+		position: relative;
+		top: 2px;
+		margin-left: 7px;
+		border: none;
+		background: none;
+		position: relative;
+		z-index: 2;
+	}
+	
+	@media(max-width: 1000px){
+		padding: 10px 25px;
+		&__item{
+			float: none;
+			text-align: center;
+			margin: 25px 0;
+			
+			&_has-children{
+				.menu__a{
+					margin-left: 21px;
+				}
+			}
+		}
+	}
+}
+
+a.menu__a{
+	@media(min-width: 1001px){
+		&:hover{
+			color: $be3;
+		}
+	}
+}
+
+/*sub menu*/
+.sub-menu{
+	list-style: none;
+	padding: 35px 15px 0;
+	top: 0;
+	right: -15px;
+	width: 155px;
+	transition: .3s;
+	@media(min-width: 1001px){
+		position: absolute;
+		visibility: hidden;
+		opacity: 0;
+	}
+	&::before{
+		@extend %ab;
+		width: 10px;
+		height: 10px;
+		border-top: 1px solid $gy;
+		border-left: 1px solid $gy;
+		background: $llgy;
+		position: absolute;
+		top: 29px;
+		right: 15px;
+		z-index: 2;
+		transform: rotate(45deg);
+	}
+	&::after{
+		@extend %ab;
+		border: 1px solid $gy;
+		background: $llgy;
+		box-shadow: 1px 1px 7px rgba(0, 0, 0, .21);
+		position: absolute;
+		top: 34px;
+		bottom: 0;
+		left: 0;
+		width: 100%;
+	}
+	&__item{
+		border-top: 1px solid $gy;
+		position: relative;
+		z-index: 2;
+		&:first-child{
+			margin-left: 0;
+			border-top: none;
+		}
+		&_current{
+			.sub-menu__a{
+				border-bottom-color: $bk;
+			}
+		}
+	}
+	&__a{
+		display: block;
+		font-size: 15px;
+		font-weight: 500;
+		color: $be;
+		padding: 10px 0;
+		line-height: normal;
+		text-decoration: none;
+		transition: .21s;	
+		&:hover{
+			color: $be3;
+		}
+	}
+	@media(max-width: 1000px){
+		width: auto;
+		left: 0;
+		padding: 14px 0 0;
+		box-shadow: none !important;
+		position: relative;
+		height: 0;
+		overflow: hidden;
+		&__item{
+			float: none;
+			margin: 0;
+			padding: 9px 0;
+		}		
+	}
+}

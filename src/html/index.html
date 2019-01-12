@@ -1,0 +1,65 @@
+@@include('_head.html', {"title": "dealersAir"})
+
+<!--HEADER/-->
+@@include('../modules/header/header.html', {"menu_item_current": "", "prefix":""})
+<!--/HEADER-->
+
+<!--MAIN/-->
+<main class="main">
+   <article class="section">
+      <div class="row row_wrp">
+         <div class="col-12">
+            <h1 class="title">
+               RegExp
+            </h1>
+         </div>
+      </div>
+      <div class="article row row_wrp">
+         <div class="col-12">
+<h2>Специальные символы</h2>
+<p>
+Список cпециальных символов: <code>[ \ ^ $ . | ? * + ( )</code>
+</p>
+<p>
+Чтоб превратить спецсимвол в обычный, его необходимо экранировать, ставим перед ним обратный слеш <code>\</code>
+</p>
+<h2>Создание регулярного выражения</h2>
+<p>
+Регулярное выражение состоит из шаблона (pattern) и <b>необязательных</b> флагов (flags).
+</p>
+<pre><code>var reg = /pattern/;
+var reg = /pattern/flags;</code></pre>
+<p>
+или
+</p>
+<pre><code>var reg = new RegExp('pattern');
+var reg = new RegExp('pattern', 'flags');</code></pre>
+<blockquote>
+<span class="att-icon">При создании регулярки через <strong>new RegExp()</strong>, символьные классы (\w, \d, \s и
+т.д.), необходимо экранировать.</span>
+<pre><code>var reg = new RegExp('\\w*');</code></pre>
+</blockquote>
+<h2>Флаги</h2>
+<p>
+<code>i</code> - игнорирует регистр.
+</p>
+<p>
+<code>g</code> - ищет все совпадения.
+</p>
+<p>
+<code>m</code> - многострочный режим. Cимволы <code>^</code> и <code>$</code> обозначают начало и конец каждой
+строки.
+</p>
+<pre><code>var reg = /pattern/igm; <code class="code-comm">// порядок флагов не имеет значения</code>
+var reg = new RegExp('pattern', 'mig'); <code class="code-comm">// порядок флагов не имеет значения</code></code></pre>
+         </div>
+      </div>
+   </article>
+</main>
+<!--/MAIN-->
+
+@@include('_javascript.html')
+
+</body>
+
+</html>

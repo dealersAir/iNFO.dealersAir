@@ -1,0 +1,26 @@
+@import "variables";
+@import "functions";
+@import "extends";
+@import "mixins";
+
+%ico{
+	display: inline-block;
+	position: relative;
+	&:before{
+		display: block;
+		content: "";
+		position: absolute;
+		left: 0;
+	}
+}
+
+.att-icon{
+	@extend %ico;
+	min-height: em(18);
+	padding-left: em(45);
+	&:before{
+		width: em(30);
+		height: em(27);
+		top: em(-3);
+	}
+}
