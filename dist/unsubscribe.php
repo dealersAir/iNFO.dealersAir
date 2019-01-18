@@ -11,7 +11,7 @@ if (!empty($email)) {
    
    $email = urldecode($email);
 
-   $unsubscr = $db -> prepare('UPDATE info_subscribers SET subscribe=? WHERE email=?');
+   $unsubscr = $db -> prepare('UPDATE subscribers SET subscribe=? WHERE email=?');
    $unsubscr -> execute(array(0, $email));
 
    $response = 'На ваш email ('. $email .'), больше не будут приходить письма от iNFO.dealersAir (free@info.dealersair.com)';
