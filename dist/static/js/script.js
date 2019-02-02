@@ -1,27 +1,26 @@
 // global variables
-;var browser, ajax, animate;
+; var browser, ajax, animate;
 
-(function () {
+(function() {
 	"use strict";
 
 	// Get useragent
-
 	document.documentElement.setAttribute('data-useragent', navigator.userAgent.toLowerCase());
 
 	// Browser identify
-	browser = function (userAgent) {
+	browser = (function(userAgent) {
 		userAgent = userAgent.toLowerCase();
 
 		if (/(msie|rv:11\.0)/.test(userAgent)) {
 			return 'ie';
 		}
-	}(navigator.userAgent);
+	})(navigator.userAgent);
 
 	// Add support CustomEvent constructor for IE
 	try {
 		new CustomEvent("IE has CustomEvent, but doesn't support constructor");
 	} catch (e) {
-		window.CustomEvent = function (event, params) {
+		window.CustomEvent = function(event, params) {
 			var evt;
 
 			params = params || {
@@ -35,20 +34,20 @@
 			evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
 
 			return evt;
-		};
+		}
 
 		CustomEvent.prototype = Object.create(window.Event.prototype);
 	}
 
 	// Window Resized Event
 	var winResizedEvent = new CustomEvent('winResized'),
-	    rsz = true;
+	rsz = true;
 
-	window.addEventListener('resize', function () {
+	window.addEventListener('resize', function() {
 		if (rsz) {
 			rsz = false;
 
-			setTimeout(function () {
+			setTimeout(function() {
 				window.dispatchEvent(winResizedEvent);
 				rsz = true;
 			}, 1021);
@@ -57,7 +56,7 @@
 
 	// Closest polyfill
 	if (!Element.prototype.closest) {
-		(function (ElProto) {
+		(function(ElProto) {
 			ElProto.matches = ElProto.matches || ElProto.mozMatchesSelector || ElProto.msMatchesSelector || ElProto.oMatchesSelector || ElProto.webkitMatchesSelector;
 
 			ElProto.closest = ElProto.closest || function closest(selector) {
@@ -79,7 +78,7 @@
 	}
 
 	// Check element for hidden
-	Element.prototype.elementIsHidden = function () {
+	Element.prototype.elementIsHidden = function() {
 		var elem = this;
 
 		while (elem) {
@@ -95,10 +94,10 @@
 		}
 
 		return false;
-	};
+	}
 
 	// Ajax
-	ajax = function ajax(options) {
+	ajax = function(options) {
 		var xhr = new XMLHttpRequest();
 
 		xhr.open('POST', options.url);
@@ -106,23 +105,23 @@
 		if (typeof options.send == 'string') {
 			xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
 		}
-
-		xhr.onreadystatechange = function () {
+		
+		xhr.onreadystatechange = function() {
 			if (xhr.readyState == 4 && xhr.status == 200) {
 				options.success(xhr.response);
 			} else if (xhr.readyState == 4 && xhr.status != 200) {
 				options.error(xhr.response);
 			}
-		};
+		}
 
 		xhr.send(options.send);
-	};
+	}
 
 	/*
- Animation
- animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
- */
-	animate = function animate(draw, duration, ease, complete) {
+	Animation
+	animate(function(takes 0...1) {}, Int duration in ms[, Str easing[, Fun animation complete]]);
+	*/
+	animate = function(draw, duration, ease, complete) {
 		var start = performance.now();
 
 		requestAnimationFrame(function anim(time) {
@@ -132,7 +131,7 @@
 				timeFraction = 1;
 			}
 
-			var progress = ease ? easing(timeFraction, ease) : timeFraction;
+			var progress = (ease) ? easing(timeFraction, ease) : timeFraction;
 
 			draw(progress);
 
@@ -144,39 +143,38 @@
 				}
 			}
 		});
-	};
+	}
 
 	function easing(timeFraction, ease) {
 		switch (ease) {
 			case 'easeInQuad':
-				return quad(timeFraction);
-
+			return quad(timeFraction);
+			
 			case 'easeOutQuad':
-				return 1 - quad(1 - timeFraction);
-
+			return 1 - quad(1 - timeFraction);
+			
 			case 'easeInOutQuad':
-				if (timeFraction <= 0.5) {
-					return quad(2 * timeFraction) / 2;
-				} else {
-					return (2 - quad(2 * (1 - timeFraction))) / 2;
-				}
+			if (timeFraction <= 0.5) {
+				return quad(2 * timeFraction) / 2;
+			} else {
+				return (2 - quad(2 * (1 - timeFraction))) / 2;
+			}
 		}
 	}
 
 	function quad(timeFraction) {
-		return Math.pow(timeFraction, 2);
+		return Math.pow(timeFraction, 2)
 	}
 })();
-;var MobNav;
+; var MobNav;
 
-(function () {
+(function() {
 	"use strict";
 
 	//fix header
-
 	var headerElem = document.querySelector('.header');
 
-	window.addEventListener('scroll', function () {
+	window.addEventListener('scroll', function() {
 		if (window.pageYOffset > 21) {
 			headerElem.classList.add('header_fixed');
 		} else if (!document.body.classList.contains('popup-is-opened') && !document.body.classList.contains('mob-nav-is-opened')) {
@@ -189,12 +187,12 @@
 		options: null,
 		winScrollTop: 0,
 
-		fixBody: function fixBody(st) {
+		fixBody: function(st) {
 			if (st) {
 				this.winScrollTop = window.pageYOffset;
 
 				document.body.classList.add('mob-nav-is-opened');
-				document.body.style.top = -this.winScrollTop + 'px';
+				document.body.style.top = -this.winScrollTop +'px';
 			} else {
 				document.body.classList.remove('mob-nav-is-opened');
 
@@ -202,7 +200,7 @@
 			}
 		},
 
-		open: function open(btnElem) {
+		open: function(btnElem) {
 			var headerElem = document.getElementById(this.options.headerId);
 
 			if (!headerElem) return;
@@ -216,7 +214,7 @@
 			}
 		},
 
-		close: function close() {
+		close: function() {
 			var headerElem = document.getElementById(this.options.headerId);
 
 			if (!headerElem) return;
@@ -232,24 +230,22 @@
 			this.fixBody(false);
 		},
 
-		init: function init(options) {
-			var _this = this;
-
+		init: function(options) {
 			this.options = options;
 
-			document.addEventListener('click', function (e) {
+			document.addEventListener('click', (e) => {
 				var openElem = e.target.closest(options.openBtn),
-				    closeElem = e.target.closest(options.closeBtn),
-				    menuLinkElement = e.target.closest(options.menuLinkSelector);
+				closeElem = e.target.closest(options.closeBtn),
+				menuLinkElement = e.target.closest(options.menuLinkSelector);
 
 				if (openElem) {
 					e.preventDefault();
-					_this.open(openElem);
+					this.open(openElem);
 				} else if (closeElem) {
 					e.preventDefault();
-					_this.close();
+					this.close();
 				} else if (menuLinkElement) {
-					_this.close();
+					this.close();
 				}
 			});
 		}
@@ -260,11 +256,11 @@
 */
 var Menu;
 
-(function () {
+(function() {
 	"use strict";
 
 	Menu = {
-		toggle: function toggle(elem, elementStr, subMenuStr) {
+		toggle: function(elem, elementStr, subMenuStr) {
 			var subMenuElem = elem.querySelector(subMenuStr);
 
 			if (!subMenuElem) {
@@ -277,31 +273,29 @@ var Menu;
 				elem.classList.remove('active');
 			} else {
 				var mainElem = elem.closest('.menu'),
-				    itemElements = mainElem.querySelectorAll(elementStr),
-				    subMenuElements = mainElem.querySelectorAll(subMenuStr);
+				itemElements = mainElem.querySelectorAll(elementStr),
+				subMenuElements = mainElem.querySelectorAll(subMenuStr);
 
 				for (var i = 0; i < itemElements.length; i++) {
 					itemElements[i].classList.remove('accord__button_active');
 					subMenuElements[i].style.height = 0;
 				}
 
-				subMenuElem.style.height = subMenuElem.scrollHeight + 'px';
+				subMenuElem.style.height = subMenuElem.scrollHeight +'px';
 
 				elem.classList.add('active');
 			}
 		},
 
-		init: function init(elementStr, subMenuStr) {
-			var _this = this;
-
-			document.addEventListener('click', function (e) {
+		init: function(elementStr, subMenuStr) {
+			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
 				if (!elem) {
 					return;
 				}
 
-				_this.toggle(elem, elementStr, subMenuStr);
+				this.toggle(elem, elementStr, subMenuStr);
 			});
 		}
 	};
@@ -314,29 +308,29 @@ Toggle.onChange = function(toggleElem, state) {
 }
 */
 
-;var Toggle;
+; var Toggle;
 
-(function () {
+(function() {
 	"use strict";
-
+	
 	Toggle = {
 		toggledClass: 'toggled',
 		onChange: null,
-
-		target: function target(toggleElem, state) {
+		
+		target: function(toggleElem, state) {
 			var targetElements = document.querySelectorAll(toggleElem.getAttribute('data-target-elements'));
-
+			
 			if (!targetElements.length) return;
-
+			
 			if (state) {
 				for (var i = 0; i < targetElements.length; i++) {
 					targetElements[i].classList.add(this.toggledClass);
 				}
-
+				
 				//dependence elements
 				if (toggleElem.hasAttribute('data-dependence-target-elements')) {
 					var dependenceTargetElements = document.querySelectorAll(toggleElem.getAttribute('data-dependence-target-elements'));
-
+					
 					for (var i = 0; i < dependenceTargetElements.length; i++) {
 						dependenceTargetElements[i].classList.remove(this.toggledClass);
 					}
@@ -347,73 +341,71 @@ Toggle.onChange = function(toggleElem, state) {
 				}
 			}
 		},
-
-		toggle: function toggle(toggleElem, off) {
+		
+		toggle: function(toggleElem, off) {
 			var state;
-
+			
 			if (toggleElem.classList.contains(this.toggledClass)) {
 				toggleElem.classList.remove(this.toggledClass);
-
+				
 				state = false;
-
+				
 				if (toggleElem.hasAttribute('data-first-text')) {
 					toggleElem.innerHTML = toggleElem.getAttribute('data-first-text');
 				}
 			} else if (!off) {
 				toggleElem.classList.add(this.toggledClass);
-
+				
 				state = true;
-
+				
 				if (toggleElem.hasAttribute('data-second-text')) {
 					toggleElem.setAttribute('data-first-text', toggleElem.innerHTML);
-
+					
 					toggleElem.innerHTML = toggleElem.getAttribute('data-second-text');
 				}
 			}
-
+			
 			//target
 			if (toggleElem.hasAttribute('data-target-elements')) {
 				this.target(toggleElem, state);
 			}
-
+			
 			//call onChange
 			if (this.onChange) {
 				this.onChange(toggleElem, state);
 			}
 		},
-
-		onDocClickOff: function onDocClickOff(e, onDocClickOffSelector) {
-			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' + this.toggledClass);
-
+		
+		onDocClickOff: function (e, onDocClickOffSelector) {
+			var toggleElements = document.querySelectorAll(onDocClickOffSelector + '.' +this.toggledClass);
+			
 			for (var i = 0; i < toggleElements.length; i++) {
 				var elem = toggleElements[i];
-
+				
 				if (elem.hasAttribute('data-target-elements')) {
 					var targetSelectors = elem.getAttribute('data-target-elements');
-
+					
 					if (!e.target.closest(targetSelectors)) {
 						this.toggle(elem, true);
 					}
 				}
 			}
 		},
-
-		init: function init(toggleSelector, onDocClickOffSelector, toggledClass) {
-			var _this = this;
-
+		
+		init: function(toggleSelector, onDocClickOffSelector, toggledClass) {
 			if (toggledClass) {
 				this.toggledClass = toggledClass;
 			}
-
-			document.addEventListener('click', function (e) {
+			
+			document.addEventListener('click', (e) => {
 				var toggleElem = e.target.closest(toggleSelector);
-
+				
 				if (toggleElem) {
 					e.preventDefault();
-
-					_this.toggle(toggleElem);
+					
+					this.toggle(toggleElem);
 				} else {
-					_this.onDocClickOff(e, onDocClickOffSelector);
+					this.onDocClickOff(e, onDocClickOffSelector);
 				}
 			});
 		}
@@ -421,17 +413,16 @@ Toggle.onChange = function(toggleElem, state) {
 })();
 var Popup, MediaPopup;
 
-(function () {
+(function() {
 	'use strict';
 
 	//popup core
-
 	Popup = {
 		winScrollTop: 0,
 		onClose: null,
 		headerSelector: '.header',
 
-		fixBody: function fixBody(st) {
+		fixBody: function(st) {
 			var headerElem = document.querySelector(this.headerSelector);
 
 			if (st && !document.body.classList.contains('popup-is-opened')) {
@@ -442,24 +433,24 @@ var Popup, MediaPopup;
 				document.body.classList.add('popup-is-opened');
 
 				if (headerElem) {
-					headerElem.style.right = offset + 'px';
+					headerElem.style.right = offset +'px';
 				}
 
-				document.body.style.right = offset + 'px';
+				document.body.style.right = offset +'px';
 
-				document.body.style.top = -this.winScrollTop + 'px';
+				document.body.style.top = (-this.winScrollTop) +'px';
 			} else if (!st) {
 				if (headerElem) {
 					headerElem.style.right = '';
 				}
-
+				
 				document.body.classList.remove('popup-is-opened');
 
 				window.scrollTo(0, this.winScrollTop);
 			}
 		},
 
-		open: function open(elementStr, callback) {
+		open: function(elementStr, callback) {
 			var elem = document.querySelector(elementStr);
 
 			if (!elem || !elem.classList.contains('popup__window')) {
@@ -469,7 +460,7 @@ var Popup, MediaPopup;
 			this.close();
 
 			var elemParent = elem.parentElement;
-
+			
 			elemParent.classList.add('popup_visible');
 
 			elem.classList.add('popup__window_visible');
@@ -483,13 +474,13 @@ var Popup, MediaPopup;
 			return elem;
 		},
 
-		message: function message(elementStr, msg, callback) {
+		message: function(elementStr, msg, callback) {
 			var elem = this.open(elementStr, callback);
 
-			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">' + msg + '</div>';
+			elem.querySelector('.popup__inner').innerHTML = '<div class="popup__message">'+ msg +'</div>';
 		},
 
-		close: function close() {
+		close: function() {
 			var elements = document.querySelectorAll('.popup__window');
 
 			if (!elements.length) {
@@ -513,21 +504,19 @@ var Popup, MediaPopup;
 			}
 		},
 
-		init: function init(elementStr) {
-			var _this = this;
-
-			document.addEventListener('click', function (e) {
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
 				var element = e.target.closest(elementStr),
-				    closeElem = e.target.closest('.js-popup-close');
+				closeElem = e.target.closest('.js-popup-close');
 
 				if (element) {
 					e.preventDefault();
 
-					_this.open(element.getAttribute('data-popup'));
-				} else if (closeElem || !e.target.closest('.popup__window') && e.target.closest('.popup')) {
-					_this.fixBody(false);
+					this.open(element.getAttribute('data-popup'));
+				} else if (closeElem || (!e.target.closest('.popup__window') && e.target.closest('.popup'))) {
+					this.fixBody(false);
 
-					_this.close();
+					this.close();
 				}
 			});
 
@@ -539,34 +528,35 @@ var Popup, MediaPopup;
 
 	//popup media
 	MediaPopup = {
-		image: function image(args) {
+		image: function(args) {
 			var elemPopup = Popup.open(args.popupStr),
-			    elemImg = elemPopup.querySelector('.popup-media__image');
+			elemImg = elemPopup.querySelector('.popup-media__image');
 
-			Popup.onClose = function () {
+			Popup.onClose = function() {
 				elemImg.src = '#';
-				elemImg.classList.remove('popup-media__image_visible');
-			};
+				elemImg.classList.remove('popup-media__image_visible'); 
+			}
 
 			elemImg.src = args.href;
 			elemImg.classList.add('popup-media__image_visible');
+			
 		},
 
-		video: function video(args) {},
+		video: function(args) {
 
-		next: function next(elem) {
+		},
+
+		next: function(elem) {
 			if (!elem.hasAttribute('data-group')) {
 				return;
 			}
 
 			var group = elem.getAttribute('data-group'),
-			    index = [].slice.call(document.querySelectorAll('[data-group="' + group + '"]')).indexOf(elem);
+			index = [].slice.call(document.querySelectorAll('[data-group="'+ group +'"]')).indexOf(elem);
 		},
 
-		init: function init(elementStr) {
-			var _this2 = this;
-
-			document.addEventListener('click', function (e) {
+		init: function(elementStr) {
+			document.addEventListener('click', (e) => {
 				var element = e.target.closest(elementStr);
 
 				if (!element) {
@@ -576,7 +566,7 @@ var Popup, MediaPopup;
 				e.preventDefault();
 
 				var type = element.getAttribute('data-type'),
-				    args = {
+				args = {
 					href: element.href,
 					caption: element.getAttribute('data-caption'),
 					group: element.getAttribute('data-group'),
@@ -584,16 +574,19 @@ var Popup, MediaPopup;
 				};
 
 				if (type == 'image') {
-					_this2.image(args);
+					this.image(args);
 				} else if (type == 'video') {
-					_this2.video(args);
+					this.video(args);
 				}
 
-				_this2.next(element);
+				this.next(element);
 			});
 		}
 	};
+
 })();
+
+
 
 /*var pPopup = {
 	closeCallback: function() {},
@@ -780,6 +773,7 @@ var Popup, MediaPopup;
 
 };*/
 
+
 /*$(document).ready(function() {
 	$('body').on('click', '.js-open-popup', function () {
 		Popup.show($(this).attr('data-popup'));
@@ -850,15 +844,15 @@ Anchor.init(Str anchor selector[, Int duration ms[, Int shift px]]);
 
 var Anchor;
 
-(function () {
+(function() {
 	"use strict";
 
 	Anchor = {
 		duration: 1000,
 		shift: 0,
 
-		scroll: function scroll(anchorId, e) {
-			var anchorSectionElem = document.getElementById(anchorId + '-anchor');
+		scroll: function(anchorId, e) {
+			var anchorSectionElem = document.getElementById(anchorId +'-anchor');
 
 			if (!anchorSectionElem) {
 				return;
@@ -869,16 +863,14 @@ var Anchor;
 			}
 
 			var scrollTo = anchorSectionElem.getBoundingClientRect().top + window.pageYOffset,
-			    scrollTo = scrollTo - this.shift;
+			scrollTo = scrollTo - this.shift;
 
-			animate(function (progress) {
-				window.scrollTo(0, scrollTo * progress + (1 - progress) * window.pageYOffset);
+			animate(function(progress) {
+				window.scrollTo(0, ((scrollTo * progress) + ((1 - progress) * window.pageYOffset)));
 			}, this.duration, 'easeInOutQuad');
 		},
 
-		init: function init(elementStr, duration, shift) {
-			var _this = this;
-
+		init: function(elementStr, duration, shift) {
 			if (duration) {
 				this.duration = duration;
 			}
@@ -888,18 +880,18 @@ var Anchor;
 			}
 
 			//click anchor
-			document.addEventListener('click', function (e) {
+			document.addEventListener('click', (e) => {
 				var elem = e.target.closest(elementStr);
 
 				if (elem) {
-					_this.scroll(elem.getAttribute('href').split('#')[1], e);
+					this.scroll(elem.getAttribute('href').split('#')[1], e);
 				}
 			});
 
 			//hash anchor
 			if (window.location.hash) {
-				window.addEventListener('load', function () {
-					_this.scroll(window.location.hash.split('#')[1]);
+				window.addEventListener('load', () => {
+					this.scroll(window.location.hash.split('#')[1]);
 				});
 			}
 		}
@@ -909,24 +901,25 @@ var Anchor;
 new Alert({
 	content: 'We use coockie',
 	position: 'top', // default - bottom
-	showOnce: true // default - false
+	showOnce: true, // default - false
+	addClass: 'alert-class'
 });
 */
 
-;var Alert;
+; var Alert;
 
-(function () {
+(function() {
 	'use strict';
 
 	var alertIndex = 0;
 
-	Alert = function Alert(opt) {
+	Alert = function (opt) {
 		opt = opt || {};
 
-		var alertId = 'alert-id-' + alertIndex++;
+		var alertId = 'alert-id-'+ (alertIndex++);
 
 		if (opt.showOnce) {
-			var hiddenAlert = window.localStorage.getItem('notShowAlert=' + alertId);
+			let hiddenAlert = window.localStorage.getItem('notShowAlert='+ alertId);
 
 			if (hiddenAlert !== null && hiddenAlert === 'true') {
 				return false;
@@ -940,18 +933,18 @@ new Alert({
 
 		alertElem.id = alertId;
 
-		alertElem.innerHTML = '<div></div><button class="alert-close-btn"></button>';
+		alertElem.innerHTML = '<div></div><button class="js-alert-close alert-close-btn"></button>';
 
 		document.body.appendChild(alertElem);
 
 		if (opt.position == 'top') {
 			alertElem.classList.add('alert_top');
 		}
-
+		
 		// set content
 		this.setContent = function (content) {
 			alertElem.querySelector('div').innerHTML = content;
-		};
+		}
 
 		if (opt.content) {
 			this.setContent(opt.content);
@@ -959,56 +952,58 @@ new Alert({
 
 		// hide permanently
 		function hidePermanently() {
-			window.localStorage.setItem('notShowAlert=' + alertId, 'true');
+			window.localStorage.setItem('notShowAlert='+ alertId, 'true');
 		}
 
 		// hide
 		function hide() {
 			alertElem.classList.add('alert_hidden');
-
+			
 			if (opt.showOnce) {
 				hidePermanently();
 			}
 		}
 
-		alertElem.querySelector('.alert-close-btn').addEventListener('click', hide);
-	};
+		alertElem.addEventListener('click', function(e) {
+			if (e.target.closest('.js-alert-close')) {
+				hide();
+			}
+		});
+	}
 })();
-;var GetContentAjax;
+; var GetContentAjax;
 
-(function () {
+(function() {
 	"use strict";
 
-	GetContentAjax = function GetContentAjax(options) {
-		var _this = this;
-
+	GetContentAjax = function(options) {
 		if (!document.querySelector(options.eventBtn)) {
 			return;
 		}
 
 		this.output = null;
 
-		var getContent = function getContent(eventBtnElem) {
+		var getContent = (eventBtnElem) => {
 			var outputDivElem = document.querySelector(options.outputDiv);
 
 			ajax({
 				url: options.sourceFile,
 				send: eventBtnElem.getAttribute('data-send'),
-				success: function success(response) {
-					if (_this.output === null) {
+				success: (response) => {
+					if (this.output === null) {
 						outputDivElem.innerHTML = response;
 					} else {
-						outputDivElem.innerHTML = _this.output(response);
+						outputDivElem.innerHTML = this.output(response);
 					}
 				},
-				error: function error(response) {
+				error: (response) => {
 					console.log(response);
 				}
 			});
-		};
+		}
 
 		if (options.event == 'click') {
-			document.addEventListener('click', function (e) {
+			document.addEventListener('click', (e) => {
 				var eventBtnElem = e.target.closest(options.eventBtn);
 
 				if (eventBtnElem) {
@@ -1018,8 +1013,9 @@ new Alert({
 				}
 			});
 		}
-	};
+	}
 })();
+
 
 /*var Ajax = {
 	take: function(url,data,id,fun) {

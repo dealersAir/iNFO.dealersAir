@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
 	(function initFun() {
-		if (window.innerWidth < 1200) {}
+		if (window.innerWidth < 1200) {
+
+		}
 
 		window.addEventListener('winResized', initFun);
 	})();
@@ -8,7 +10,9 @@ document.addEventListener('DOMContentLoaded', function () {
 	// init toggle button
 	Toggle.init('.js-toggle');
 
-	Toggle.onChange = function (tgl, state) {};
+	Toggle.onChange = function (tgl, state) {
+
+	}
 
 	// menu
 	if (window.innerWidth < 1000) {
@@ -28,7 +32,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	// alert
 	new Alert({
-		content: 'На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом.<br> Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.',
+		content: '<div class="row"><div class="col-8 col_center p-0"><div class="row row_col-middle"><div class="col-9">На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом. Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.</div><div class="col"><button class="js-alert-close btn btn_be">Хорошо</button></div></div></div></div>',
 		showOnce: true
 	});
 
@@ -48,5 +52,5 @@ document.addEventListener('DOMContentLoaded', function () {
 		var result = response.match(/\<div id\="source"\>([\s\S]*?)\<\/div\>/);
 
 		return result[1];
-	};
+	}
 });

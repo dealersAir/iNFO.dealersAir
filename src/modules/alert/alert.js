@@ -2,7 +2,8 @@
 new Alert({
 	content: 'We use coockie',
 	position: 'top', // default - bottom
-	showOnce: true // default - false
+	showOnce: true, // default - false
+	addClass: 'alert-class'
 });
 */
 
@@ -33,7 +34,7 @@ new Alert({
 
 		alertElem.id = alertId;
 
-		alertElem.innerHTML = '<div></div><button class="alert-close-btn"></button>';
+		alertElem.innerHTML = '<div></div><button class="js-alert-close alert-close-btn"></button>';
 
 		document.body.appendChild(alertElem);
 
@@ -64,6 +65,10 @@ new Alert({
 			}
 		}
 
-		alertElem.querySelector('.alert-close-btn').addEventListener('click', hide);
+		alertElem.addEventListener('click', function(e) {
+			if (e.target.closest('.js-alert-close')) {
+				hide();
+			}
+		});
 	}
 })();
