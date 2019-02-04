@@ -44,7 +44,9 @@ var Anchor;
 				var elem = e.target.closest(elementStr);
 
 				if (elem) {
-					this.scroll(elem.getAttribute('href').split('#')[1], e);
+					const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
+					
+					this.scroll(anchId, e);
 				}
 			});
 

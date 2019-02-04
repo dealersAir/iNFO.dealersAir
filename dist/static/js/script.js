@@ -884,7 +884,9 @@ var Anchor;
 				var elem = e.target.closest(elementStr);
 
 				if (elem) {
-					this.scroll(elem.getAttribute('href').split('#')[1], e);
+					const anchId = (elem.hasAttribute('href')) ? elem.getAttribute('href').split('#')[1] : elem.getAttribute('data-anchor-id');
+					
+					this.scroll(anchId, e);
 				}
 			});
 
@@ -933,12 +935,16 @@ new Alert({
 
 		alertElem.id = alertId;
 
-		alertElem.innerHTML = '<div></div><button class="js-alert-close alert-close-btn"></button>';
+		alertElem.innerHTML = '<div></div><button class="js-alert-close alert__close-btn"></button>';
 
 		document.body.appendChild(alertElem);
 
 		if (opt.position == 'top') {
 			alertElem.classList.add('alert_top');
+		}
+		
+		if (opt.addClass) {
+			alertElem.classList.add(opt.addClass);
 		}
 		
 		// set content

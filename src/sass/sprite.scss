@@ -26,3 +26,8 @@ $sprite-width: 2192;
 	@extend %svg-exclamation-triangle;
 	@include bgs(596);
 }
+
+.down-btn:after{
+	@extend %svg-arrow-alt-circle-down;
+	@include bgs(512);
+}

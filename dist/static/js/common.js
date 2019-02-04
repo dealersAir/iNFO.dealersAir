@@ -1,9 +1,13 @@
 document.addEventListener('DOMContentLoaded', function () {
+	const fsElem = document.getElementById('js-first-screen');
+
 	(function initFun() {
-		if (window.innerWidth < 1200) {
+		if (fsElem) {
+			let padTop = 60;
 
+			fsElem.style.height = (window.innerHeight - padTop) +'px';
 		}
-
+		
 		window.addEventListener('winResized', initFun);
 	})();
 
@@ -28,11 +32,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	// anchor
-	Anchor.init('.js-anchor', 700, 100);
+	Anchor.init('.js-anchor', 700, 60);
 
 	// alert
 	new Alert({
-		content: '<div class="row"><div class="col-8 col_center p-0"><div class="row row_col-middle"><div class="col-9">На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом. Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.</div><div class="col"><button class="js-alert-close btn btn_be">Хорошо</button></div></div></div></div>',
+		content: '<div class="row alert__row row_col-middle row_sm-x-nw"><div class="col">На нашем веб-сайте используются файлы cookies, которые позволяют улучшить Ваше взаимодействие с сайтом. Когда вы посещаете данный веб-сайт, Вы даете согласие на использование файлов cookies.</div><div class="col"><button class="js-alert-close btn btn_be">Хорошо</button></div></div>',
 		showOnce: true
 	});
 
