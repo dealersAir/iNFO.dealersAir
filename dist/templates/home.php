@@ -1,5 +1,5 @@
 <?php
-$meta = array('title' => 'Каталог бесплатных курсов, бесплатные и платные курсы');
+$meta = array('title' => 'Инфокурсы, инфобизнес');
 include $_SERVER['DOCUMENT_ROOT'] .'/templates/inc/header.php';
 ?>
 
